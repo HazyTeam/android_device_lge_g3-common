@@ -29,7 +29,6 @@ TARGET_ARCH := arm
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_ABI := armeabi-v7a
 TARGET_CPU_ABI2 := armeabi
-TARGET_CPU_SMP := true
 TARGET_CPU_VARIANT := krait
 TARGET_USE_QCOM_BIONIC_OPTIMIZATION := true
 
@@ -40,7 +39,7 @@ TARGET_NO_BOOTLOADER := true
 # Kernel
 BOARD_CUSTOM_BOOTIMG := true
 BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
-BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=g3 user_debug=31 msm_rtb.filter=0x0
+BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=g3 user_debug=31 msm_rtb.filter=0x0 androidboot.bootdevice=msm_sdcc.1
 BOARD_KERNEL_BASE := 0x00000000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
@@ -71,7 +70,6 @@ BOARD_HARDWARE_CLASS := $(LOCAL_PATH)/cmhw/
 # Display
 BOARD_EGL_CFG := $(LOCAL_PATH)/configs/egl.cfg
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_ION := true
 USE_OPENGL_RENDERER := true
 
@@ -86,12 +84,6 @@ EXTENDED_FONT_FOOTPRINT := true
 
 # Lights
 TARGET_PROVIDES_LIBLIGHT := true
-
-# Logging
-TARGET_USES_LOGD=false
-
-# Media
-TARGET_ENABLE_QC_AV_ENHANCEMENTS := true
 
 # NFC
 BOARD_NFC_CHIPSET := pn547
@@ -108,10 +100,7 @@ BOARD_FLASH_BLOCK_SIZE := 131072
 TARGET_POWERHAL_VARIANT := qcom
 
 # Qualcomm support
-COMMON_GLOBAL_CFLAGS += -DQCOM_BSP
-COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
 BOARD_USES_QCOM_HARDWARE := true
-TARGET_USES_QCOM_BSP := true
 
 # Recovery
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -123,6 +112,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 
 # Radio
 BOARD_RIL_CLASS := ../../../device/lge/g3-common/ril/
+TARGET_RELEASE_CPPFLAGS += -DNEEDS_LGE_RIL_SYMBOLS
 
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
@@ -135,7 +125,6 @@ BOARD_SEPOLICY_UNION += \
     genfs_contexts \
     hostapd.te \
     init_shell.te \
-    kcal_dev.te \
     kernel.te \
     keystore.te \
     lge_touch_sysfs.te \
@@ -146,6 +135,7 @@ BOARD_SEPOLICY_UNION += \
     platform_app.te \
     property.te \
     property_contexts \
+    radio.te \
     rmt_storage.te \
     sensors.te \
     servicemanager.te \
@@ -153,7 +143,7 @@ BOARD_SEPOLICY_UNION += \
     system_app.te \
     tee.te \
     thermal-engine.te \
-    time_data_file.te \
+    vibe_data_file.te \
     ueventd.te \
     vold.te \
     wcnss_service.te \
